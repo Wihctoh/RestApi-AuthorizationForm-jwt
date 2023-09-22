@@ -6,7 +6,7 @@ async function getAllUsersDB() {
   const sql = "select * from users";
   const { rows } = await client.query(sql);
 
-  await client.release();
+  client.release();
 
   return rows;
 }
@@ -17,7 +17,7 @@ async function getUserByIdDB(id) {
   const sql = "select * from users where id = $1";
   const { rows } = await client.query(sql, [id]);
 
-  await client.release();
+  client.release();
 
   return rows;
 }
@@ -28,7 +28,7 @@ async function getUserByEmailDB(email) {
   const sql = "select * from users where email = $1";
   const { rows } = await client.query(sql, [email]);
 
-  await client.release();
+  client.release();
 
   return rows;
 }
@@ -44,7 +44,7 @@ async function createUserDB(name, surname, email, pwd) {
     const { rows } = await client.query(sql, [name, surname, email, pwd]);
 
     await client.query("commit");
-    await client.release();
+    client.release();
 
     return rows;
   } catch (error) {
@@ -67,7 +67,7 @@ async function updateUserDB(id, name, surname, email, password) {
     const { rows } = await client.query(sql, [id, name, surname, email, password]);
 
     await client.query("commit");
-    await client.release();
+    client.release();
 
     return rows;
   } catch (error) {
@@ -89,7 +89,7 @@ async function deleteUserDB(id) {
     const { rows } = await client.query(sql, [id]);
 
     await client.query("commit");
-    await client.release();
+    client.release();
 
     return rows;
   } catch (error) {
@@ -101,4 +101,11 @@ async function deleteUserDB(id) {
   }
 }
 
-module.exports = { getAllUsersDB, getUserByIdDB, createUserDB, updateUserDB, deleteUserDB, getUserByEmailDB };
+module.exports = {
+  getAllUsersDB,
+  getUserByIdDB,
+  createUserDB,
+  updateUserDB,
+  deleteUserDB,
+  getUserByEmailDB,
+};

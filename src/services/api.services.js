@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const {
   getAllUsersDB,
   getUserByIdDB,
@@ -25,11 +26,7 @@ async function getUserById(id) {
 }
 
 async function getUserByEmail(email) {
-  const data = await getUserByEmailDB(email);
-
-  if (!data.length) throw new Error("email not found!");
-
-  return data;
+  return await getUserByEmailDB(email);
 }
 
 async function createUser(name, surname, email, pwd) {
@@ -37,13 +34,33 @@ async function createUser(name, surname, email, pwd) {
 
   if (foundUser.length) throw new Error("user already exist!");
 
-  const salt = 10;
-  const hashPwd = await bcrypt.hash(pwd, salt);
+  const hashPwd = await bcrypt.hash(pwd, 10);
   const data = await createUserDB(name, surname, email, hashPwd);
 
   if (!data.length) throw new Error("user not created!");
 
   return data;
+}
+
+async function authUser(email, password) {
+  const foundUser = await getUserByEmail(email);
+
+  if (!foundUser.length) throw new Error("user not found!");
+
+  const pwdCheck = await bcrypt.compare(password, foundUser[0].password);
+
+  if (pwdCheck) {
+    const token = jwt.sign(
+      {
+        email: email,
+        password: foundUser[0].password,
+      },
+      process.env.PUBLIC_KEY,
+      { expiresIn: "1h" }
+    );
+
+    return `Bearer ${token}`;
+  } else return "incorrect email or password!";
 }
 
 async function updateUser(id, name, surname, email, password) {
@@ -62,4 +79,4 @@ async function deleteUser(id) {
   return data;
 }
 
-module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
+module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser, authUser };

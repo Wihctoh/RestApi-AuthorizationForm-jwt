@@ -5,37 +5,44 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  authUser,
 } = require("../services/api.services");
 
 router.get("/", async (req, res) => {
   try {
-    const data = await getAllUsers();
-
-    res.send(data);
+    res.status(200).send(await getAllUsers());
   } catch (error) {
-    res.send(error.message);
+    res.status(404).send(error.message);
   }
 });
 
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await getUserById(id);
 
-    res.send(data);
+    res.status(200).send(await getUserById(id));
   } catch (error) {
-    res.send(error.message);
+    res.status(404).send(error.message);
   }
 });
 
 router.post("/SignIn", async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
-    const data = await createUser(name, surname, email, password);
 
-    res.send(data);
+    res.status(200).send(await createUser(name, surname, email, password));
   } catch (error) {
-    res.send(error.message);
+    res.status(404).send(error.message);
+  }
+});
+
+router.post("/auth", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    res.status(200).send(await authUser(email, password));
+  } catch (error) {
+    res.status(404).send(error.message);
   }
 });
 
@@ -43,22 +50,20 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { name, surname, email, password } = req.body;
-    const data = await updateUser(id, name, surname, email, password);
 
-    res.send(data);
+    res.status(200).send(await updateUser(id, name, surname, email, password));
   } catch (error) {
-    res.send(error.message);
+    res.status(404).send(error.message);
   }
 });
 
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await deleteUser(id);
 
-    res.send(data);
+    res.status(200).send(await deleteUser(id));
   } catch (error) {
-    res.send(error.message);
+    res.status(404).send(error.message);
   }
 });
 
