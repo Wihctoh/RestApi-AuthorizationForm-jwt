@@ -22,6 +22,17 @@ async function getUserByIdDB(id) {
   return rows;
 }
 
+async function getUserByEmailDB(email) {
+  const client = await pool.connect();
+
+  const sql = "select * from users where email = $1";
+  const { rows } = await client.query(sql, [email]);
+
+  await client.release();
+
+  return rows;
+}
+
 async function createUserDB(name, surname, email, pwd) {
   const client = await pool.connect();
 
@@ -90,4 +101,4 @@ async function deleteUserDB(id) {
   }
 }
 
-module.exports = { getAllUsersDB, getUserByIdDB, createUserDB, updateUserDB, deleteUserDB };
+module.exports = { getAllUsersDB, getUserByIdDB, createUserDB, updateUserDB, deleteUserDB, getUserByEmailDB };

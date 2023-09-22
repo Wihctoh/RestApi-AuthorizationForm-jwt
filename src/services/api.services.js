@@ -1,6 +1,8 @@
+const bcrypt = require("bcrypt");
 const {
   getAllUsersDB,
   getUserByIdDB,
+  getUserByEmailDB,
   createUserDB,
   updateUserDB,
   deleteUserDB,
@@ -22,8 +24,22 @@ async function getUserById(id) {
   return data;
 }
 
+async function getUserByEmail(email) {
+  const data = await getUserByEmailDB(email);
+
+  if (!data.length) throw new Error("email not found!");
+
+  return data;
+}
+
 async function createUser(name, surname, email, pwd) {
-  const data = await createUserDB(name, surname, email, pwd);
+  const foundUser = await getUserByEmail(email);
+
+  if (foundUser.length) throw new Error("user already exist!");
+
+  const salt = 10;
+  const hashPwd = await bcrypt.hash(pwd, salt);
+  const data = await createUserDB(name, surname, email, hashPwd);
 
   if (!data.length) throw new Error("user not created!");
 

@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use("/", apiRouter);
+app.use("/user", apiRouter);
 
 app.use((err, req, res, _next) => res.send(err.message));
 
