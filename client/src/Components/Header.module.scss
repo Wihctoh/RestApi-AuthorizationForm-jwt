@@ -1,0 +1,14 @@
+.headerWrapper {
+  max-width: 1920px;
+  margin: 24px auto;
+
+  .headerNav {
+    max-width: 1180px;
+    margin: auto;
+    padding: 13px 0;
+
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+  }
+}

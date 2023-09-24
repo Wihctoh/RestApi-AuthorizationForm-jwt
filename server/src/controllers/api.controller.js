@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/SignIn", async (req, res) => {
+router.post("/sign_up", async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
 
@@ -36,7 +36,7 @@ router.post("/SignIn", async (req, res) => {
   }
 });
 
-router.post("/auth", async (req, res) => {
+router.post("/sign_in", async (req, res) => {
   try {
     const { email, password } = req.body;
 

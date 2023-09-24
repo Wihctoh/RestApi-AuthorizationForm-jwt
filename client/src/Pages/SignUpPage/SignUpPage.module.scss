@@ -1,0 +1,79 @@
+input {
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 6px;
+  border: 1px solid #cad0db;
+  background: #fff;
+}
+
+.signInWrapper {
+  padding: 30px;
+  max-width: 905px;
+  margin: 70px auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font: 500 23px Inter;
+    color: #12141a;
+
+    align-self: flex-start;
+  }
+
+  p {
+    margin-top: 10px;
+
+    font: 500 14px inter;
+    line-height: 20px; /* 142.857% */
+    color: #606778;
+  }
+
+  .SignInForm {
+    margin: 40px 0 32px;
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .SignInFormNameSurname {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+  }
+
+  .submitBtn {
+    width: 100px;
+
+    padding: 10px 0;
+    border-radius: 4px;
+    background: #228be6;
+    color: #fff;
+    cursor: pointer;
+
+    text-align: center;
+    align-self: flex-end;
+  }
+
+  p {
+    font: 500 14px inter;
+    line-height: 20px; /* 142.857% */
+    color: #7b8499;
+
+    align-self: flex-end;
+
+    a {
+      padding-left: 3px;
+
+      font: 500 14px inter;
+      line-height: 20px;
+      text-decoration-line: underline;
+      color: #12141a;
+    }
+  }
+}
