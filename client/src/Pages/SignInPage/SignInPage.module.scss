@@ -33,7 +33,7 @@ input {
     align-self: flex-start;
   }
 
-  .SignInForm {
+  .signInForm {
     margin: 40px 0 32px;
     width: 100%;
 
@@ -55,10 +55,14 @@ input {
     align-self: flex-end;
   }
 
-  p {
+  .signUpLink {
+    margin-top: 12px;
+
     font: 500 14px inter;
     line-height: 20px; /* 142.857% */
     color: #7b8499;
+
+    align-self: flex-end;
 
     a {
       padding-left: 3px;

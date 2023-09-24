@@ -60,7 +60,7 @@ async function authUser(email, password) {
     );
 
     return `Bearer ${token}`;
-  } else return "incorrect email or password!";
+  } else return [];
 }
 
 async function updateUser(id, name, surname, email, password) {

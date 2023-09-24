@@ -15,9 +15,10 @@ const SignInPage = () => {
     try {
       const res = await axios.post("http://localhost:5000/user/sign_in", inpValue);
 
-      console.log(res.data);
+      if (!res.data.length) throw new Error("Incorrect email or password!");
     } catch (error) {
       alert(error.message);
+      setInpValue({ email: "", password: "" });
     }
   }
 
@@ -28,18 +29,30 @@ const SignInPage = () => {
         <h1>Sign In</h1>
         <p>Log in to access your account or create one. Verify your email for seamless access.</p>
 
-        <div className={style.SignInForm}>
-          <input id="email" type="text" placeholder="Your email" onChange={getInpValue} />
-          <input id="password" type="password" placeholder="Password" onChange={getInpValue} />
+        <div className={style.signInForm}>
+          <input
+            id="email"
+            type="text"
+            placeholder="Your email"
+            value={inpValue.email}
+            onChange={getInpValue}
+          />
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            value={inpValue.password}
+            onChange={getInpValue}
+          />
         </div>
 
         <div className={style.submitBtn} onClick={sendForm}>
           Continue
         </div>
-        <p>
+        <div className={style.signUpLink}>
           Not registered yet?
           <Link to={"/sign_up"}>Sign Up</Link>
-        </p>
+        </div>
       </div>
     </>
   );
