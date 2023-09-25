@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const {
   getAllUsersDB,
   getUserByIdDB,
@@ -49,18 +48,9 @@ async function authUser(email, password) {
 
   const pwdCheck = await bcrypt.compare(password, foundUser[0].password);
 
-  if (pwdCheck) {
-    const token = jwt.sign(
-      {
-        email: email,
-        password: foundUser[0].password,
-      },
-      process.env.PUBLIC_KEY,
-      { expiresIn: "1h" }
-    );
+  if (!pwdCheck) throw new Error("incorrect password");
 
-    return `Bearer ${token}`;
-  } else return [];
+  return foundUser;
 }
 
 async function updateUser(id, name, surname, email, password) {

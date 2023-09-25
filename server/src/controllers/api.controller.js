@@ -7,6 +7,7 @@ const {
   deleteUser,
   authUser,
 } = require("../services/api.services");
+const createToken = require("../helper/jwt");
 
 router.get("/", async (req, res) => {
   try {
@@ -39,8 +40,15 @@ router.post("/sign_up", async (req, res) => {
 router.post("/sign_in", async (req, res) => {
   try {
     const { email, password } = req.body;
+    const userData = await authUser(email, password);
+    const token = createToken(userData);
 
-    res.status(200).send(await authUser(email, password));
+    res.cookie("access_token", token, {
+      httpOnly: false,
+      secure: true,
+    });
+
+    res.status(200).send(userData);
   } catch (error) {
     res.status(404).send(error.message);
   }

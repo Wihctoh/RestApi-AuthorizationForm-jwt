@@ -1,18 +1,11 @@
-import { Route, Routes } from "react-router-dom";
-import HomePage from "./Pages/HomePage/HomePage";
-import SignInPage from "./Pages/SignInPage/SignInPage";
-import SignUpPage from "./Pages/SignUpPage/SignUpPage";
+import RoutesProvider from "./RoutesProvider/RoutesProvider";
+import useAuth from "./hooks/useAuth";
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/sign_in" element={<SignInPage />}></Route>
-        <Route path="/sign_up" element={<SignUpPage />}></Route>
-      </Routes>
-    </>
-  );
+  const { token } = useAuth();
+  const route = RoutesProvider(!!token);
+
+  return <>{route}</>;
 }
 
 export default App;

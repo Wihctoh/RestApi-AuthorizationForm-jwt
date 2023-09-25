@@ -1,10 +1,14 @@
 import Header from "../../Components/Header";
 import style from "./SignInPage.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const SignInPage = () => {
+  const { logIn } = useAuth();
+  const navigate = useNavigate();
+
   const [inpValue, setInpValue] = useState({ email: "", password: "" });
 
   function getInpValue(e) {
@@ -13,9 +17,14 @@ const SignInPage = () => {
 
   async function sendForm() {
     try {
-      const res = await axios.post("http://localhost:5000/user/sign_in", inpValue);
+      const res = await axios.post("http://localhost:5000/user/sign_in", inpValue, {
+        withCredentials: true,
+      });
 
       if (!res.data.length) throw new Error("Incorrect email or password!");
+
+      logIn();
+      navigate("/home");
     } catch (error) {
       alert(error.message);
       setInpValue({ email: "", password: "" });
