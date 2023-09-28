@@ -1,4 +1,4 @@
-import Header from "../../Components/Header";
+import Header from "../../Components/Header/Header";
 import style from "./SignUpPage.module.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";

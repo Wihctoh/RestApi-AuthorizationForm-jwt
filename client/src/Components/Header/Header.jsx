@@ -1,9 +1,10 @@
-import useAuth from "../hooks/useAuth";
 import style from "./Header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
+import authContext from "../../Context/AuthContext";
+import { useContext } from "react";
 
 const Header = () => {
-  const { token, logOut } = useAuth();
+  const { logOut, token } = useContext(authContext);
   const navigate = useNavigate();
 
   function logOutUser() {

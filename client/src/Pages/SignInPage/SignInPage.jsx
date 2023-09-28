@@ -1,12 +1,12 @@
-import Header from "../../Components/Header";
+import Header from "../../Components/Header/Header";
 import style from "./SignInPage.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
-import useAuth from "../../hooks/useAuth";
+import authContext from "../../Context/AuthContext";
 
 const SignInPage = () => {
-  const { logIn } = useAuth();
+  const { logIn } = useContext(authContext);
   const navigate = useNavigate();
 
   const [inpValue, setInpValue] = useState({ email: "", password: "" });

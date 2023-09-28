@@ -1,11 +1,16 @@
 import RoutesProvider from "./RoutesProvider/RoutesProvider";
-import useAuth from "./hooks/useAuth";
+import useAuth from "./Hooks/useAuth";
+import authContext from "./Context/AuthContext";
 
 function App() {
-  const { token } = useAuth();
-  const route = RoutesProvider(!!token);
+  const auth = useAuth();
+  const route = RoutesProvider(!!auth.token);
 
-  return <>{route}</>;
+  return (
+    <>
+      <authContext.Provider value={auth}>{route}</authContext.Provider>
+    </>
+  );
 }
 
 export default App;
